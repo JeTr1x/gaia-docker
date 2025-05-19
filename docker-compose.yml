@@ -9,8 +9,5 @@ services:
       - "9068:9068"
       - "9069:9069"
     volumes:
-      - gaianet-data:/root
+      - /opt/gaianet-data:/root
     restart: unless-stopped
-
-volumes:
-  gaianet-data:
