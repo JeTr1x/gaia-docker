@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  gaianet:
+    build: .
+    container_name: gaianet
+    ports:
+      - "8080:8080"
+      - "9068:9068"
+      - "9069:9069"
+    volumes:
+      - gaianet-data:/root
+    restart: unless-stopped
+
+volumes:
+  gaianet-data:
