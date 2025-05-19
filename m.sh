@@ -34,6 +34,6 @@ EOF
     -p "$PORT":8080 \
     -p "$CHAT1":9068 \
     -p "$CHAT2":9069 \
-    -v "$DATADIR":/root/.gaianet \
+    -v "$DATADIR":/root \
     "$IMAGE_NAME"
 done
