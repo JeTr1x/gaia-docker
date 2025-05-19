@@ -5,9 +5,9 @@ services:
     build: .
     container_name: gaianet
     ports:
-      - "8080:8080"
-      - "9068:9068"
-      - "9069:9069"
+      - "${GAIANET_API_PORT}:8080"
+      - "${GAIANET_CHAT_UI_PORT}:9068"
+      - "${GAIANET_CHAT_WS_PORT}:9069"
     volumes:
-      - /opt/gaianet-data:/root
+      - "${GAIANET_DATA_DIR}:/root"
     restart: unless-stopped
