@@ -26,6 +26,8 @@ trap "echo '[EPLOG] Stopping GaiaNet...'; gaianet stop; exit 0" SIGINT SIGTERM
 echo "[EPLOG] Starting GaiaNet node..."
 exec gaianet start &
 
+sleep 20
+
 tail -F /root/gaianet/log/*.log &
 TAIL_PID=$!
 
