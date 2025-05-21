@@ -6,13 +6,11 @@ BRANCH="gpu"
 CLONE_DIR="gaia-docker-gpu"
 IMAGE_NAME="gaianet-gpu"
 
-# Порты и директории по умолчанию
-API_PORT_BASE=8000
-CHAT_UI_PORT_BASE=9068
-CHAT_WS_PORT_BASE=9069
+API_PORT_BASE=38000
+CHAT_UI_PORT_BASE=39068
+CHAT_WS_PORT_BASE=39069
 DATA_DIR_BASE="$HOME/gaianet_data"
 
-# 1. Клонируем репозиторий или обновляем
 if [ -d "$CLONE_DIR" ]; then
   echo "[INFO] Репозиторий уже клонирован, обновляем..."
   cd "$CLONE_DIR"
@@ -25,11 +23,9 @@ else
   git clone --branch "$BRANCH" "$REPO_URL" "$CLONE_DIR"
 fi
 
-# 2. Собираем Docker образ
 echo "[INFO] Собираем Docker образ $IMAGE_NAME..."
 docker build -t "$IMAGE_NAME" "$CLONE_DIR"
 
-# 3. Определяем количество GPU на сервере
 GPU_COUNT=$(nvidia-smi --list-gpus | wc -l)
 echo "[INFO] Найдено GPU: $GPU_COUNT"
 
@@ -38,7 +34,6 @@ if [ "$GPU_COUNT" -eq 0 ]; then
   exit 1
 fi
 
-# 4. Запускаем по одному контейнеру на каждую GPU
 for (( i=0; i<GPU_COUNT; i++ )); do
   CONTAINER_NAME="gaianet-gpu-$i"
   API_PORT=$((API_PORT_BASE + i))
@@ -59,6 +54,10 @@ for (( i=0; i<GPU_COUNT; i++ )); do
     --gpus "device=$i" \
     --restart unless-stopped \
     "$IMAGE_NAME"
+
+  echo "[INFO] Ждём 3 минуты перед запуском следующего контейнера..."
+  sleep 180
 done
 
 echo "[INFO] Запущено $GPU_COUNT контейнеров."
+
