@@ -13,13 +13,21 @@ if [ ! -d "/root/gaianet" ]; then
 fi
 
 # Проверяем наличие файла модели в папке gaianet
-MODEL_PATH="/root/gaianet/Qwen2-0.5B-Instruct-Q5_K_M.gguf"
-if [ ! -f "$MODEL_PATH" ]; then
-  echo "[EPLOG] Model file not found, running init..."
-  gaianet init --config https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen2-0.5b-instruct/config.json
+CONFIG_FILE="$HOME/gaianet/config.json"
+if [ ! -f "$CONFIG_FILE" ]; then
+  mkdir $HOME/gaianet
+  curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/install.sh' | bash -s -- --ggmlcuda 12
+  source $HOME/.bashrc
+  wget -O "$HOME/gaianet/config.json" https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen-2.5-coder-7b-instruct_rustlang/config.json
+  jq '.chat = "https://huggingface.co/gaianet/Qwen2.5-Coder-3B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-3B-Instruct-Q5_K_M.gguf"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
+  jq '.chat_name = "Qwen2.5-Coder-3B-Instruct"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
+  grep '"chat":' $HOME/gaianet/config.json
+  grep '"chat_name":' $HOME/gaianet/config.json
+  gaianet init
 else
   echo "[EPLOG] Model file found, skipping init."
 fi
+
 
 trap "echo '[EPLOG] Stopping GaiaNet...'; gaianet stop; exit 0" SIGINT SIGTERM
 
