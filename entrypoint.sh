@@ -15,14 +15,16 @@ fi
 
 # Проверяем наличие файла модели в папке gaianet
 
-CONFIG_FILE="/root//gaianet/config.json"
-if [ ! -f "$CONFIG_FILE" ]; then
+CONFIG_FILE="/root/gaianet/config.json"
+ISINITFILE="/root/gaianet/isinitfile"
+if [ ! -f "$ISINITFILE" ]; then
   wget -O "/root/gaianet/config.json" https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen-2.5-coder-7b-instruct_rustlang/config.json
   jq '.chat = "https://huggingface.co/gaianet/Qwen2.5-Coder-3B-Instruct-GGUF/resolve/main/Qwen2.5-Coder-3B-Instruct-Q5_K_M.gguf"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
   jq '.chat_name = "Qwen2.5-Coder-3B-Instruct"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
   grep '"chat":' /root/gaianet/config.json
   grep '"chat_name":' /root/gaianet/config.json
   gaianet init
+  touch /root/gaianet/isinitfile
 else
   echo "[EPLOG] Model file found, skipping init."
 fi
