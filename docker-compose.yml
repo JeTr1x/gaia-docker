@@ -10,4 +10,5 @@ services:
       - "${GAIANET_CHAT_WS_PORT}:9069"
     volumes:
       - "${GAIANET_DATA_DIR}:/root"
+    gpus: "device=0"
     restart: unless-stopped
