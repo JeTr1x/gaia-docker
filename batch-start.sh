@@ -8,6 +8,7 @@ IMAGE_NAME="gaianet-node"
 
 mkdir -p "$BASE_PATH/.envs"
 mkdir -p "$BASE_PATH/data"
+docker build -t "$IMAGE_NAME" .
 
 for i in $(seq 1 100); do
   PORT=$((BASE_PORT + i))
