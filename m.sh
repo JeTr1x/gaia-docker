@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BASE_PORT=8080
-CHAT_BASE_PORT1=10000
-CHAT_BASE_PORT2=11000
+BASE_PORT=10000
+CHAT_BASE_PORT1=11000
+CHAT_BASE_PORT2=12000
 BASE_PATH="/opt/gaianet-run"
 IMAGE_NAME="gaianet-node"
 
@@ -36,4 +36,6 @@ EOF
     -p "$CHAT2":9069 \
     -v "$DATADIR":/root \
     "$IMAGE_NAME"
+  echo "Sleeping 120s before next container start"
+  sleep 120  
 done
