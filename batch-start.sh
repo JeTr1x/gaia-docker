@@ -6,6 +6,10 @@ CHAT_BASE_PORT2=12000
 BASE_PATH="/opt/gaianet-run"
 IMAGE_NAME="gaianet-node"
 
+
+echo "Starting proccess of running $1 gaia nodes..."
+
+echo "Building Docker Image..."
 mkdir -p "$BASE_PATH/.envs"
 mkdir -p "$BASE_PATH/data"
 docker build -t "$IMAGE_NAME" .
