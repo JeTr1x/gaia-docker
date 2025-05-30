@@ -37,6 +37,6 @@ EOF
     -p "$CHAT2":9069 \
     -v "$DATADIR":/root \
     "$IMAGE_NAME"
-  echo "Sleeping 120s before next container start"
-  sleep 120  
+  echo "Sleeping 60s before next container start"
+  sleep 60  
 done
