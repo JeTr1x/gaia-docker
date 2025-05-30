@@ -18,7 +18,7 @@ for NODE_DIR in "$BASE_DIR"/node*/gaianet; do
     KEYSTORE=$(jq -r '.keystore' "$NODEID_FILE")
     PASSWORD=$(jq -r '.password' "$NODEID_FILE")
 
-    echo "$NODE_NAME,$SERVER_IP,$ADDRESS,$DEVICE_ID,$ADDRESS,$KEYSTORE,$PASSWORD" >> "$OUTPUT_FILE"
+    echo "$NODE_NAME,$SERVER_IP,$ADDRESS,$DEVICE_ID,$KEYSTORE,$PASSWORD" >> "$OUTPUT_FILE"
   else
     echo "⚠️ Пропущено: $NODE_NAME — отсутствует deviceid.txt или nodeid.json"
   fi
