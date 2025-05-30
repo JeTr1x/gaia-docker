@@ -10,7 +10,7 @@ mkdir -p "$BASE_PATH/.envs"
 mkdir -p "$BASE_PATH/data"
 docker build -t "$IMAGE_NAME" .
 
-for i in $(seq 1 100); do
+for i in $(seq 1 $1); do
   PORT=$((BASE_PORT + i))
   CHAT1=$((CHAT_BASE_PORT1 + i))
   CHAT2=$((CHAT_BASE_PORT2 + i))
